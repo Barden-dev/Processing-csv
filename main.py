@@ -9,6 +9,7 @@ parser = argparse.ArgumentParser(description="Скрипт для обработ
 parser.add_argument(
     "-f",
     "--file",
+    default="data/products.csv",
     type=str,
     help="Обязательный аргумент: путь к CSV файлу."
     )
