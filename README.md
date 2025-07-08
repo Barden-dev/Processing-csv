@@ -38,18 +38,23 @@ python main.py --file data/products.csv
 ```
 python main.py --file data/products.csv --where "brand=apple"
 ```
+3. Фильтрация по цене:
 
-3. Сортировка по цене (по убыванию):
+```
+python main.py --file data/products.csv --where "price>700"
+```
+
+4. Сортировка по цене (по убыванию):
 ```
 python main.py --file data/products.csv --order-by "price=desc"
 ```
 
-4. Агрегация (средний рейтинг всех товаров):
+5. Агрегация (средний рейтинг всех товаров):
 ```
 python main.py --file data/products.csv --aggregate "rating=avg"
 ```
 
-5. Комбинация всех операций:
+6. Комбинация всех операций:
 Найти среднюю цену на телефоны Samsung, предварительно отсортировав их по рейтингу.
 ```
 python main.py --file data/products.csv --where "brand=samsung" --order-by "rating=desc" --aggregate "price=avg"
