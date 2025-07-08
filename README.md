@@ -60,7 +60,7 @@ python main.py --file data/products.csv --aggregate "rating=avg"
 python main.py --file data/products.csv --where "brand=samsung" --order-by "rating=desc" --aggregate "price=avg"
 ```
 
-### 🧪 Тестирование
+### Тестирование
 Проект покрыт тестами с использованием pytest.
 
 1. Запуск всех тестов:
