@@ -1,8 +1,28 @@
 import argparse
+import operator
 
-def _apply_filter(data: list, column_index: int, value: object):
-    data = [row for row in data if row[column_index] == value]
-    return data
+OPERATOR_MAP = {
+    '>': operator.gt,
+    '<': operator.lt,
+    '=': operator.eq,
+}
+
+def _apply_filter(data: list, column_index: int, value: str, operator: str):
+    comparison_func = OPERATOR_MAP[operator]
+    filtered_data = []
+
+    for row in data:
+        cell_value_str = row[column_index]
+        try:
+            numeric_cell = float(cell_value_str)
+            numeric_target = float(value)
+            if comparison_func(numeric_cell, numeric_target):
+                filtered_data.append(row)
+        except ValueError:
+            if operator == '=' and cell_value_str == value:
+                filtered_data.append(row)
+    return filtered_data
+    
     
 def _apply_sort(data: list, column_index: int, operation: str):
     def get_key(row):
@@ -35,16 +55,22 @@ def proccess_data(data: list, args: argparse.Namespace):
     data_rows = data[1:]
     
     #РАБОТА С ФИЛЬТРОМ
-    if args.where and '=' in args.where:
-        column, value = args.where.split('=')
-        if column in header:
-            data_rows = _apply_filter(data_rows, header.index(column), value)
-        else:
-            print("Ошибка, такого столбца не существует")
+    if args.where:
+        try:
+            operator = [operator for operator in args.where if operator in OPERATOR_MAP]
+            if len(operator) == 1:
+                column, value = args.where.split(operator[0])
+                if column in header:
+                    data_rows = _apply_filter(data_rows, header.index(column), value, operator[0])
+                else:
+                    print("Ошибка, такого столбца не существует")
+                    return
+            else:
+                raise
+        except:
+            print("Неверный формат аргумента, пример использования: -w \"brand=apple\" или -w \"rating>4.7\"")
             return
-    elif args.where:
-        print("Неверный формат аргумента, пример использования: -w \"brand=apple\"")
-        return
+        
 
     #РАБОТА С СОРТИРОВКОЙ
     if args.order_by and '=' in args.order_by:
