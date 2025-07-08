@@ -77,6 +77,5 @@ def proccess_data(data: list, args: argparse.Namespace):
     if aggregation_result:
         return aggregation_result
     else:
-        print([header] + data_rows)
         return [header] + data_rows
 
