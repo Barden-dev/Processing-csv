@@ -23,7 +23,6 @@ def _apply_filter(data: list, column_index: int, value: str, operator: str):
                 filtered_data.append(row)
     return filtered_data
     
-    
 def _apply_sort(data: list, column_index: int, operation: str):
     def get_key(row):
         value = row[column_index]
@@ -37,7 +36,6 @@ def _apply_sort(data: list, column_index: int, operation: str):
     
 def _apply_aggregation(data: list, column_index: int, operation: str):
     column_values = [float(row[column_index]) for row in data if row[column_index]]
-
     match operation:
         case 'avg':
             value = sum(column_values) / len(column_values)
@@ -56,6 +54,7 @@ def _apply_aggregation(data: list, column_index: int, operation: str):
 def proccess_data(data: list, args: argparse.Namespace):
     header = data[0]
     data_rows = data[1:]
+    data_rows = [row for row in data_rows if row]
     
     #РАБОТА С ФИЛЬТРОМ
     if args.where:
@@ -73,7 +72,7 @@ def proccess_data(data: list, args: argparse.Namespace):
         except:
             print("Неверный формат аргумента, пример использования: -w \"brand=apple\" или -w \"rating>4.7\"")
             return
-        
+
 
     #РАБОТА С СОРТИРОВКОЙ
     if args.order_by and '=' in args.order_by:
@@ -107,4 +106,3 @@ def proccess_data(data: list, args: argparse.Namespace):
         return aggregation_result
     else:
         return [header] + data_rows
-

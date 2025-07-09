@@ -15,6 +15,15 @@ from processing_csv.logic_handler import proccess_data
             ['iphone', 'apple', '999', '4.9']]
         ),
         
+        (
+            "rating=4.6", 
+            None,
+            None,
+            [['name', 'brand', 'price', 'rating'], 
+            ['redmi note 12', 'xiaomi', '199', '4.6'],
+            ['galaxy z flip 5', 'samsung', '999', '4.6']]
+        ),
+        
                 (
             "brand=apapappa", #Таких данных нет
             None,
@@ -97,7 +106,7 @@ from processing_csv.logic_handler import proccess_data
             "brand=apple",
             "rating=med",
             None,
-            [['med'], [5]]
+            [['med'], [4.95]]
         ),
         
         (
