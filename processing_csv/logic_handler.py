@@ -46,7 +46,10 @@ def _apply_aggregation(data: list, column_index: int, operation: str):
         case 'min':
             value = min(column_values)
         case 'med':
-            value = sorted(column_values)[len(column_values) // 2]
+            if len(column_values) % 2 != 0:
+                value = sorted(column_values)[len(column_values) // 2]
+            else:
+                value = (sorted(column_values)[len(column_values) // 2] + sorted(column_values)[len(column_values) // 2 - 1]) / 2
     return [[operation], [value]]
 
 
